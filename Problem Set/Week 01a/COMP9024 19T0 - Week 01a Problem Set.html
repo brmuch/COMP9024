@@ -1,0 +1,323 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>COMP9024 19T0 - Week 01a Problem Set</title>
+<link rel='stylesheet' type='text/css' href='./course.css'><script language="JavaScript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=AM_HTMLorMML">
+function changeText(el, newText) {
+  // Safari work around
+  if (el.innerText)
+    el.innerText = newText;
+  else if (el.firstChild && el.firstChild.nodeValue)
+    el.firstChild.nodeValue = newText;
+}
+function toggleVisible(elid) {
+  el1 = document.getElementById(elid);
+  el2 = document.getElementById(elid+"a");
+  if (el1.style.display == "") {
+     el1.style.display = "none";
+     changeText(el2,"show answer");
+  }
+  else {
+     el1.style.display = "";
+     changeText(el2,"hide answer");
+  }
+}
+</script></head>
+<body>
+<div align='center'>
+<table width='100%' border='0'>
+<tr valign='top'>
+<td align='left' width='25%'>
+  <span class='tiny'><a href="http://www.cse.unsw.edu.au/~cs9024/19T0/index.php">COMP9024 19T0</a></span>
+</td>
+<td align='center' width='50%'>
+  <span class='heading'>Week 01a Problem Set</span><br>
+  <span class='subheading'>Elementary Data and Control Structures in C</span>
+</td>
+<td align='right' width='25%'>
+  <span class='tiny'><a href="http://www.handbook.unsw.edu.au/postgraduate/courses/2019/COMP9024.html">Data Structures and Algorithms</a></span>
+</td>
+</table>
+</div>
+<ol>
+
+<br>
+<li>(Arithmetic)
+<p>There is a 5-digit number that satisfies 4&middot;<i>abcde</i> = <i>edcba</i>, that is, when multiplied by 4 yields the same number read backwards. Write a C-program to find this number.</p>
+<div id="q1" style="color:#000099;display:none">
+
+<pre class="answer">
+#include &lt;stdio.h&gt;
+
+#define MIN 10000
+#define MAX 24999    // solution has to be &lt;25000
+
+int main(void) {
+   int a, b, c, d, e, n;
+   
+   for (n = MIN; n <= MAX; n++) {
+      a = (n / 10000) % 10;
+      b = (n / 1000) % 10;
+      c = (n / 100) % 10;
+      d = (n / 10) % 10;
+      e = n % 10;
+      if (4*n == 10000*e + 1000*d + 100*c + 10*b + a) {
+         printf("%d\n", n);
+      }
+   }
+   return 0;
+}
+</pre>
+Solution: 21978
+</div>
+
+<br>
+<li>(Arrays)
+<ol type="a">
+<li>
+<p>
+Write a C-function that returns the <i>inner product</i> of two <i>n</i>-dimensional vectors <b>a</b> and <b>b</b>, encoded as 1-dimensional arrays of <i>n</i> floating point numbers.
+</p>
+<p>
+Use the function prototype <b>float innerProduct(float a[], float b[], int n)</b>.
+</p>
+<p>
+Hint: The inner product of two vectors is calculated as `sum_(i=1..n)bb"a"_(i)*bb"b"_(i)`
+</p>
+
+<li>
+<p>
+Write a C-function to compute <b>C</b> as the <i>matrix product</i> of matrices <b>A</b> and <b>B</b>.
+</p>
+<p>
+Use the function prototype <b>void matrixProduct(float a[M][N], float b[N][P], float c[M][P])</b>.
+<br>
+You can assume that <i>M, N, P</i> are given as symbolic constants, e.g.
+<pre>
+#define M 3
+#define N 4
+#define P 4
+</pre>
+<p>
+Hint: The product of an <i>m&times;n</i> matrix <b>A</b> and an <i>n&times;p</i> matrix <b>B</b> is the <i>m&times;p</i> matrix <b>C</b> such that `bb"C"_(ij) = sum_(k=1..n)bb"A"_(ik)*bb"B"_(kj)` &nbsp;for all <i>i&isin;{1..m}</i> and <i>j&isin;{1..p}</i>.
+</p>
+</ol>
+<div id="q2" style="color:#000099;display:none">
+<pre class="answer">
+float innerProduct(float a[], float b[], int n) {
+   int i;
+   float product = 0.0;
+   
+   for (i = 0; i < n; i++)
+      product += a[i] * b[i];
+
+   return product;
+}
+
+void matrixProduct(float a[M][N], float b[N][P], float c[M][P]) {
+   int i, j, k;
+   for (i = 0; i < M; i++) {
+      for (j = 0; j < P; j++) {
+	 c[i][j] = 0.0;
+	 for (k = 0; k < N; k++) {
+	    c[i][j] += a[i][k] * b[k][j];
+	 }
+      }
+   }
+}
+</pre>
+</div>
+
+<br>
+<li>(Characters)
+<p>
+Write a C-program that outputs, in alphabetical order, all strings that use each of the characters 'c', 'a', 't', 'd', 'o', 'g' exactly once.</p>
+<p>How many strings does the program generate?</p>
+<div id="q3" style="color:#000099;display:none">
+<p>There are 6! = 720 permutations of "catdog".</p>
+<p>A straightforward solution is to use six nested loops and a conditional statement to filter out all strings with duplicate characters. The following program includes a counter to check how many strings have been generated.
+<pre class="answer">
+#include &lt;stdio.h&gt;
+
+int main(void) {
+   char catdog[] = { 'a','c','d','g','o','t' };
+
+   int count = 0;
+   int i, j, k, l, m, n;
+   for (i=0; i<6; i++)
+      for (j=0; j<6; j++)
+	 for (k=0; k<6; k++)
+	    for (l=0; l<6; l++)
+	       for (m=0; m<6; m++)
+		  for (n=0; n<6; n++)
+		     if (i!=j && i!=k && i!=l && i!=m && i!=n &&
+			 j!=k && j!=l && j!=m && j!=n &&
+			 k!=l && k!=m && k!=n &&
+			 l!=m && l!=n && m!=n) {
+			   printf("%c%c%c%c%c%c\n", catdog[i], catdog[j],
+						    catdog[k], catdog[l],
+						    catdog[m], catdog[n]);
+			   count++;
+		     }
+   printf("%d\n", count);
+   return 0;
+}
+</pre>
+</div>
+
+<br>
+<li>(Elementary control structures)
+<ol type="a">
+<li>
+<p>
+Write a C-function that takes a positive integer <i>n</i> as argument and outputs a series of numbers according to the following process, until 1 is reached:</p>
+<ul>
+<li> if <i>n</i> is even, then <i>n</i> &larr; <i>n</i>/2
+<li> if <i>n</i> is odd, then <i>n</i> &larr; 3*<i>n</i>+1
+</ul>
+
+<li>
+<p>
+The Fibonacci numbers are defined as follows:
+<ul>
+<li> Fib(1) = 1
+<li> Fib(2) = 1
+<li> Fib(<i>n</i>) = Fib(<i>n</i>-1)+Fib(<i>n</i>-2) for <i>n</i>&geq;3
+</ul>
+<p>Write a C program <tt>fibonacci.c</tt> that applies the process described in Part a. to the first 10 Fibonacci numbers.</p>
+The output of the program should begin with
+<pre class="command_line">
+Fib[1] = 1
+1
+Fib[2] = 1
+1
+Fib[3] = 2
+2
+1
+Fib[4] = 3
+3
+10
+5
+16
+8
+4
+2
+1
+</pre>
+</ol>
+
+<div style="background-color:lightyellow;">
+<p><i>We have created a script that can automatically test your program. To run this test you can execute the </i><tt>dryrun</tt><i> program that corresponds to the problem set and week, i.e. prob01 for this week. It expects to find a program named </i><tt>fibonacci.c</tt><i> in the current directory. You can use dryrun as follows:</i></p>
+<pre class="command_line">
+<kbd class="shell">~cs9024/bin/dryrun prob01a</kbd>
+</pre>
+</div>
+
+<p><i>Note: Please ensure that your output follows exactly the format shown above.</i></p>
+
+
+<div id="q4" style="color:#000099;display:none">
+<pre class="answer">
+#include &lt;stdio.h&gt;
+
+#define MAX 10
+
+void collatz(int n) {  // named after the German mathematician who invented this problem
+   printf("%d\n", n);
+   while (n != 1) {
+      if (n % 2 == 0) {
+	 n = n / 2;
+      } else {
+	 n = 3*n + 1;
+      }
+      printf("%d\n", n);
+   }
+}
+
+int main(void) {
+   int fib[MAX] = { 1, 1 };     // initialise the first two numbers
+   int i;
+   for (i = 2; i < MAX; i++) {  // compute the first 10 Fibonacci numbers
+      fib[i] = fib[i-1] + fib[i-2];
+   }
+
+   for (i = 0; i < MAX; i++) {  // apply Collatz's process to each number
+      printf("Fib[%d] = %d\n", i+1, fib[i]);
+      collatz(fib[i]);
+   }
+
+   return 0;
+}
+</pre>
+</div>
+
+<br>
+<li>(Elementary data structures)
+<p>
+Define a data structure to store all information of a single ride with the Opal card. Here are two sample records:
+</p>
+<img src="Pic/Opal.png">
+<p>
+You may assume that individual stops (such as "Anzac Pde D opp UNSW") require no more than 31 characters.
+</p>
+<p>
+Determine the memory requirements of your data structure, assuming that each integer and floating point number takes 4 bytes.
+</p>
+<p>
+If you want to store millions of records, how would you improve your data structure?
+</p>
+<div id="q5" style="color:#000099;display:none">
+  There are of course many possible ways in which this data can be structured; the following is just one example:
+<pre class="answer">
+typedef struct {
+   int day, month, year;
+} DateT;
+
+typedef struct {
+   int hour, minute;
+} TimeT;
+
+typedef struct {
+   int   transaction;
+   char  weekday[4];        // 3 chars + terminating '\0'
+   DateT date;
+   TimeT time;
+   char  mode;              // 'B', 'F' or 'T'
+   char  from[32], to[32];
+   int   journey;
+   char  faretext[12];
+   float fare, discount, amount;
+} JourneyT;
+</pre>
+<p>Memory requirement for one element of type <tt>JourneyT</tt>: 4 + 4 + 12 + 8 + 1 (+ 3 padding) + 2&middot;32 + 4 + 12 + 3&middot;4 = 124 bytes.</p>
+<p>The data structure can be improved in various ways:
+<itemize>
+<item> encode both origin and destination (<tt>from</tt> and <tt>to</tt>) using Sydney Transport's unique stop IDs along with a lookup table that links e.g. 203311 to "Anzac Pde Stand D at UNSW";
+<item> use a single integer to encode the possible "Fare Applied" entries;
+<item> avoid storing redundant information like the weekday, which can be derived from the date itself.
+</itemize>
+</div>
+
+<br>
+<li><b>Challenge Exercise</b>
+<p>Write a C-function that takes 3 integers as arguments and returns the largest of them. The following restrictions apply:
+<ul>
+<li>You are not permitted to use <b>if</b> statements.
+<li>You are not permitted to use loops (e.g. <b>while</b>).
+<li>You are not permitted to call any function.
+<li>You are only permitted to use data and control structures introduced in Week 1's lecture.
+</ul>
+</p>
+<div id="q6" style="color:#000099;display:none">
+The following makes use of the fact that a true condition has value 1 and a false condition has value 0:
+<pre class="answer">
+int max(int a, int b, int c) {
+   int d = a * (a >= b) + b * (a < b);   // d is max of a and b
+   return  c * (c >= d) + d * (c < d);   // return max of c and d
+}
+</pre>
+</div>
+
+</ol>
+</body>
+</html>
