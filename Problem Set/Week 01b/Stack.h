@@ -2,5 +2,5 @@
 
 void StackInit();      // set up empty stack
 int  StackIsEmpty();   // check whether stack is empty
-void StackPush(char);  // insert char on top of stack
+void StackPush(int);  // insert char on top of stack
 int StackPop();       // remove integer from top of stack
