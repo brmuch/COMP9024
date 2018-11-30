@@ -26,8 +26,8 @@ int  QueueDequeue(){    // remove int from front of queue
     assert(queueObject.tail > -1);
     int i = queueObject.item[0];
 
-    for (int j = 0; j < queueObject.tail - 1; j ++){
-        queueObject.item[j] = queueObject.item[j + 1]
+    for (int j = 0; j < queueObject.tail; j ++){
+        queueObject.item[j] = queueObject.item[j + 1];
     }
 
     queueObject.tail --; 
