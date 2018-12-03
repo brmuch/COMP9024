@@ -11,6 +11,10 @@ For example, ./fib 60 should result in 1548008755920.
 int main(int argc, char const *argv[])
 {
     int serial, i;
+    if (argc != 2) {
+      fprintf(stderr, "Stderr: %s\n", argv[0]);
+      return 1;
+    }
     serial = atoi(argv[1]);
     
     unsigned long long int * Fib = malloc(serial * sizeof(unsigned long long int));
@@ -23,5 +27,6 @@ int main(int argc, char const *argv[])
     }
 
     printf("%lld\n", Fib[serial - 1]);
+    free(Fib);
     return 0;
 }
