@@ -53,23 +53,24 @@ NodeT *joinLL(NodeT *head1, NodeT *head2){
 
 int main(int argc, char const *argv[])
 {
-   NodeT * all = NULL;
-   int value;
+    NodeT * all = NULL;
+    int value;
 
-   printf("Enter a integer: ");    
-   while (scanf("%d", &value) == 1){
-      NodeT * new = makeNode(value);
-      all = joinLL(all, new);
-      printf("Enter a integer: ");
-   }
+    printf("Enter a integer: ");    
+    while (scanf("%d", &value) == 1){
+        NodeT * new = makeNode(value);
+        all = joinLL(all, new);
+        printf("Enter a integer: ");
+    }
 
-   printf("Finished.");
-   if (all == NULL)
-      exit(0);
-   else{
-      printf(" List is: ");
-      showLL(all);
-   }
-      
-   return 0;
+    printf("Finished.");
+    if (all == NULL)
+        exit(0);
+    else{
+        printf(" List is: ");
+        showLL(all);
+    }
+    free(all);
+    
+    return 0;
 }
