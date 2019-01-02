@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html hola_ext_inject="disabled"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>COMP9024 19t0 - Assignment 1</title>
+<!--
+
+<link rel="stylesheet" type="text/css" href="course.css"><style id="style-1-cropbar-clipper">
+.en-markup-crop-options {
+    top: 18px !important;
+    left: 50% !important;
+    margin-left: -100px !important;
+    width: 200px !important;
+    border: 2px rgba(255,255,255,.38) solid !important;
+    border-radius: 4px !important;
+}
+
+.en-markup-crop-options div div:first-of-type {
+    margin-left: 0px !important;
+}
+</style>
+-->
+
+
+
+<style>
+
+    body {font-size:11pt;font-family:arial,sans-serif;margin:10px 20px;}
+    a {color:#4444CC;text-decoration:none;}
+    a.active {color:#4444CC;text-decoration:none;}
+    a.inactive {color:#BBBBDD;text-decoration:none;}
+    a[href]:hover {color:#CC0000;background:#FFFFCC;}
+    small {font-size:75%}
+    pre {background:#EEEEFF;border:thin solid #9999CC;margin:5px 20px 5px 20px;padding:4px 8px;}
+    tt {font-size:1.0em; color: #107F80 }
+    span.toggle {font-size:67%;}
+    span.notice {font-size:110%;}
+    span.tiny {font-size:75%;font-weight:normal;}
+    span.heading {font-size:18pt;color:#4444CC;}
+    span.subheading {font-size:16pt;color:#000000;font-weight:normal;}
+    span.marks {font-weight:normal;font-size:75%;}
+    span.identifier {color:#993300;font-size:110%;font-weight:bold;font-family:courier;}
+    span.contentLink {font-weight:bold;font-size:110%}
+    span.contentNote {font-weight:normal;font-size:85%;}
+    tr.heading {font-size:large;font-weight:bold;background-color:#DDAA77;}
+    table.note {border:thin solid black;padding:2pt;width:75%}
+    div.note {border:thin solid black;font-size:90%;margin:5px 60px 5px 60px;padding:4px 8px;}
+    dt {margin-top: 10px;}
+    dt.item {font-weight:bold;}
+    h2 {font-size:16pt;font-weight:300;color:#4444CC;}
+    h3 {font-size:14pt;font-weight:300;color:#4444CC;}
+    .h2tt {font-size:17pt;font-weight:300;color:#4444CC;font-family:courier;}
+    .h3tt {font-size:15pt;font-weight:300;color:#4444CC;font-family:courier;}
+    .red {color:#CC0000;}
+    .green {color:#006600;}
+    .brown {color:#993300;}
+    .grey {color:#AAAAAA;}
+    .comment {font-size:90%;color:#666666}
+    .important {font-weight:bold;color:#CC0000;}
+    .bigQ {font-size:13pt;font-style:italic;}
+    dd{color:rgb(86, 86, 86)} 
+
+     span.v2 {background-color:palegoldenrod; color:darkgreen}
+     span.v3 {background-color:lightcyan; color:darkgreen}
+     span.v4 {background-color:lightgreen; color:darkgreen}
+     span.mystrike{ text-decoration: line-through; color:grey; }
+
+}
+</style>
+
+
+</head>
+<body>
+<div align="center">
+    <h2><span style="font-size:18pt">COMP9024: Assignment 1 </span></h2>
+    <h2><span style="font-size:22pt">Iterator ADT </span></h2>
+    <p>
+    </p>
+    </p>
+</div>
+
+<p>
+<p>The following specification may change! 
+A notice on the class web page will be posted after each revision,
+    so please check class notice board frequently. </p>
+
+
+<h4>Change log:</h4>
+<ul>
+
+<li>Instructions on "How to Submit Assignment 1" are now available, see the <a href=http://www.cse.unsw.edu.au/~cs9024/19t0/assn/assn1/Ass1.html#Submission>"Submission"</a> sub section. Please note that the due date/time is now extended to 23:59pm on Sunday 06 January 2019. The late penalty is 
+2 marks per day off the ceiling, and the last day to submit late is 10 Jan/2019.  </li>
+
+</ul>
+
+<hr style="width:70%; margin:auto;">
+
+<h2>Objectives</h2>
+<ul>
+<li> to give you experience in implementing ADTs in C
+</li><li> to give you experience with doubly-linked lists
+</li><li> to give you further practice with C and data structures
+</li></ul>
+
+<h2>Admin</h2>
+<table border="0" cellpadding="4">
+<tbody><tr valign="top"><td><b>Marks</b></td><td>10 marks </td></tr>
+<tr valign="top"><td><b>Group?</b></td><td>This assignment is completed <b>individually</b></td></tr>
+<tr valign="top"><td><b>Due</b></td><td>23:59pm on Sunday 06/Jan/2019 (<strike>Friday 04 January 2019</strike>). </td></tr>
+
+<tr valign="top"><td><b>Late<br>Penalty</b></td><td> 2 marks per day off the ceiling<br>
+    <small>(e.g. if you are 2 days late, your maximum possible marks is 6/10)</small>
+    <p>
+        The last day to submit late is 10 Jan/2019 (<strike>09 January 2019</strike>), after this date, you will receive zero mark for this assignment.
+    </p>
+</td></tr>
+</tbody></table>
+
+
+<h2>Aim</h2>
+
+<p>
+In this assignment, your task is to implement a list Iterator ADT, in the file <tt>listIteratorInt.c</tt>.
+
+You need to write wrapper code to test your implementations, and make sure to test a variety of conditions.
+</p>
+<p>
+Please note that, you need to submit only one file <tt>listIteratorInt.c</tt> , 
+that includes the C code implementing the required list Iterator ADT. 
+
+</p>
+
+
+<h3>Iterator</h3>
+<p>An iterator offers an easy way to traverse through a collection, add new elements, delete and modify existing elements.
+    Iterators are widely supported by langauges like C++ and Java. However, C does not offer iterators. In this assignment your task is to implement
+    two list iterators that allow the programmer to traverse the list in either direction, modify the list during iteration, and obtain the iterator's current position in the list.
+</p>
+
+<p>
+    You will implement list iterators similar to the one available in Java. The following interface specifications are drawn
+    from Java (7) ListIterator API and adapted for C implementations.
+</p>
+
+<p>
+    A List Iterator has no current element; its cursor position always lies between the element that would be
+    returned by a call to <tt>previous</tt> and the element that would be returned by a call to <tt>next</tt>.
+    An iterator for a list of length n has n+1 possible cursor positions, as illustrated by the carets (^) below:
+</p>
+
+<pre>
+                         Element(0)   Element(1)   Element(2)   ... Element(n-1)
+ cursor positions:     ^            ^            ^            ^                  ^
+</pre>
+
+
+<p>
+    Note that the <tt>delete</tt> and <tt>set</tt> methods are not defined in terms of the cursor position;
+    they are defined to operate on the last element returned by a call to <tt>next</tt> or <tt>previous</tt>.
+</p>
+
+<hr>
+
+<h2>Integer List iterator</h2>
+
+
+<p>
+You need to implement a list iterator that can store integer values, and offer the following interface to the programmer.
+You must use <b>doubly linked list</b> to implement your list iterator. You need to implement the following methods in the 
+file <tt>listIteratorInt.c</tt>, and submit this file as described in the section named "Submission".
+</p>
+
+<ul>
+<li>Download files: <a href="assn1.zip">assn1.zip</a>.</li>
+
+<li>Download files to help you test your solution : <tt><a href="testDir.zip">testDir.zip</a></tt>. 
+We will discuss the provided testing framework in the lecture (12/Dec). 
+</li>
+
+<p>
+<li>Log from sample tests: <a href="sample_tests_log1.txt">sample_tests_log1.txt</a>. <p></li>
+</ul>
+
+
+<!--
+
+<ul>
+<li>Download files for Part-1: <a href="ass1p1.zip">ass1p1.zip</a>. <p></li>
+<li><b>Log from sample tests</b>: <a href="sample_tests_log1.txt">sample_tests_log1.txt</a>. <p></li>
+</ul>
+-->
+
+<p>
+You need to implement the following methods in the
+file <tt>listIteratorInt.c</tt>. Note  that you need to submit ONLY one file
+<tt>listIteratorInt.c</tt> for this assignment. Please do not modify the header file <tt>listIteratorInt.h</tt>. 
+
+You can write your test code in <tt>testListIteratorInt.c</tt>. However, you will not submit your test code. 
+We will test your implementation using our test sets, so make sure you do NOT modify function 
+headers (signatures) in the header file <tt>listIteratorInt.h</tt>. 
+</p>
+
+<p>Again, remember that you must use <b>doubly linked list</b> to implement your list iterator. 
+
+<h3>Interface </h3>
+
+<dl style="margin:20px 60px;">
+    <dt><tt>IteratorInt IteratorIntNew()</tt></dt>
+    <dd>Creates a new list iterator that can store integer values.</dd>
+
+    <dt><tt>int add(IteratorInt it, int v)</tt></dt>
+    <dd>
+      Inserts the specified value <tt>v</tt> into the list iterator <tt>it</tt>.
+      The element is inserted immediately before the element that would be returned by next(), if any, and after the element that would be returned by previous(), if any. (If the list contains no elements, the new element becomes the sole element on the list.) The new element is inserted before the implicit cursor: a subsequent call to next would be unaffected, and a subsequent call to previous would return the new element.
+      <p>Returns 1 if successful, 0 otherwise.
+    </dd>
+
+    <dt><tt>int hasNext(IteratorInt it)</tt></dt>
+    <dd>Returns 1 if the given list iterator has more elements when traversing the list in the forward direction, returns 0 otherwise.
+    </dd>
+
+    <dt><tt>int hasPrevious(IteratorInt  it)</tt></dt>
+    <dd>Returns 1 if the given list iterator has more elements when traversing 
+	the list in the reverse direction,
+        returns 0 otherwise.
+    </dd>
+
+    <dt><tt>int *next(IteratorInt  it)</tt></dt>
+    <dd>Returns the pointer to the next value in the given list iterator and 
+	advances the cursor position.
+        This method may be called repeatedly to iterate through the list, 
+	or intermixed with calls to <tt>previous</tt>
+        to go back and forth. (Note that alternating calls to next and 
+	previous will return the same element repeatedly.)
+      	<p>The method returns NULL if it has no next value.
+    </dd>
+
+    <dt><tt>int *previous(IteratorInt  it)</tt></dt>
+    <dd>Returns the pointer to the previous value in the given list iterator and 
+	moves the cursor position backwards. This method may be
+        called repeatedly to iterate through the list backwards, or intermixed 
+	with calls to <tt>next</tt> to go back and forth.
+        (Note that alternating calls to next and previous will return the same element repeatedly.)
+      	<p>The method returns NULL if it has no previous value.
+    </dd>
+
+    <dt><tt>int deleteElm(IteratorInt  it)</tt></dt>
+    <dd>Deletes from the list iterator the last value that was returned 
+	by <tt>next</tt> or <tt>previous</tt>
+      or <tt>findNext</tt> or <tt>findPrevious</tt>.
+
+      <p><i>Precondition</i>: A call to <tt>deleteElm</tt> must be IMMEDIATELY preceded 
+	by a successful call to one of <tt>next</tt> or <tt>previous</tt>
+      	or <tt>findNext</tt> or <tt>findPrevious</tt>.
+      <p>
+      Returns 1 if successful, 0 otherwise (for example, invalid <tt>deleteElm</tt> call).
+       
+    </dd>
+    
+    
+    
+    <dt><tt>int set(IteratorInt it, int v)</tt></dt>
+    <dd>Replaces the last element returned by <tt>next</tt> or <tt>previous</tt> 
+      or <tt>findNext</tt> or <tt>findPrevious</tt>
+      with the specified element (v).
+              
+      <p><i>Precondition</i>: A call to <tt>set</tt> must be IMMEDIATELY preceded by a successful call to one of <tt>next</tt> or <tt>previous</tt>
+      or <tt>findNext</tt> or <tt>findPrevious</tt>.
+      <p>
+      Returns 1 if successful, 0 otherwise (for example, invalid <tt>set</tt> call).      
+     
+      
+    </dd>    
+
+    <dt><tt>int *findNext(IteratorInt  it, int v)</tt></dt>
+    <dd>Returns pointer to the next value in <tt>it</tt> that matches 
+	 the given value <tt>v</tt>
+        and advances the cursor position <b>past the value returned.</b>
+        <p>The method returns NULL if there is no such next value and 
+	   the cursor is <b>not moved from the current position</b>. 
+	<p>For example: 
+	<pre>
+	[ 20 ^ 12 15 5 14 10 5 9 3 ] 
+findNext(it, 5) will result in 
+	[ 20 12 15 5 ^ 14 10 5 9 3 ]
+findNext(it, 5) will result in 
+	[ 20 12 15 5 14 10 5 ^ 9 3 ]
+</pre>
+    </dd>
+
+    <dt><tt>int *findPrevious(IteratorInt  it, int v)</tt></dt>
+    <dd>Returns pointer to the previous value in <tt>it</tt> that matches the given value <tt>v</tt>
+        and moves the cursor position backwards <b>before the value returned</b>.
+        <p>The method returns NULL if there is no such previous value and the cursor 
+	is <b>not moved from the current position</b>. 
+	<p>For example: 
+	<pre>
+	[ 20 12 15 5 14 10 5 9 ^ 3 ] 
+findPrevious(it, 5) will result in 
+	[ 20 12 15 5 14 10 ^ 5 9 3 ]
+findPrevious(it, 5) will result in 
+	[ 20 12 15 ^ 5 14 10 5 9 3 ]
+</pre>
+    </dd>
+
+    <dt><tt>void reset(IteratorInt it)</tt></dt>
+    <dd>Resets <tt>it</tt> to the start of the list.
+
+   <dt><tt>void freeIt(IteratorInt it)</tt></dt>
+    <dd>Deletes all the nodes in <tt>it</tt> and frees associated memory.
+</dl>
+
+<hr>
+
+
+<h2>Assessment Criteria</h2>
+
+<p>Your program will be tested thoroughly and objectively.  This assignment will be marked out of 10 where 8 marks are for correctness (based on auto marking) and 2 marks are for your solution's complexity, style and comments. 
+<p>
+
+<hr>
+<a name="Submission">
+<h2>Submission</h2>
+</a>
+<div style="padding:1px 50px;">
+
+<p> 
+
+   <p style="font-size:1.2em">
+     <p>
+Please note that the due date/time is now extended to 23:59pm on Sunday 06 January 2019. The late penalty is 
+2 marks per day off the ceiling, and the last day to submit late is 10 Jan/2019.  
+   </p>
+
+  <p> You need to submit only one file <b>listIteratorInt.c</b>. </p>
+
+<p>To Submit this assignment, go to the <b><a target="_blank" href="https://webcms3.cse.unsw.edu.au/COMP9024/19T0/resources/21611">Submission page</a></b> and click the tab named "<b>Make Submission</b>" 
+ (<a href="makeSubmission.png">see sample screen dump here</a>).</p> 
+
+<p>Please read the submission log. If your submission is successful, the log will include messages like "<b>Simple Tests PASSed</b>" and "<b>Submission accepted</b>" (<a href="logOK.png">see sample log here</a>). 
+If you do not see these messages in your submission log, please debug your program and re-submit. 
+  </p>
+
+
+</div>
+
+<hr>
+
+<h2>Plagiarism</h2>
+<p>This is an individual assignment. Each student will have to develop their own solution
+    without help from other people. In particular, it is not permitted to exchange code or pseudocode.
+    You are not allowed to use code developed by persons other than yourself. If you have questions
+    about the assignment, ask your tutor Before submitting any work you should read and understand
+    the following very useful guide by the Learning Centre How Not To Plagiarise.
+    All work submitted for assessment must be entirely your own work.
+    We regard unacknowledged copying of material, in whole or part, as an extremely serious offence.
+    For further information, see the Course Information.
+</p>
+
+<hr>
+<p style="text-align: center"> -- end -- </p>
+
+
+</body></html>
