@@ -1,0 +1,19 @@
+a.path
+smallest: any path with one edge (e.g. a-b or g-m)
+largest: some path including all nodes (e.g. m-g-h-k-i-j-a-b-c-d-e-f)
+
+b.cycle
+smallest: need at least 3 nodes (e.g. i-j-k-i or h-i-k-h)
+largest: path including most nodes (e.g. g-h-k-i-j-a-b-c-d-e-f-g) (can't involve m)
+
+c.spanning tree
+smallest: any spanning tree must include all nodes (the largest path above is an example)
+largest: same
+
+d.vertex degree
+smallest: there is a node that has degree 1 (vertex m)
+largest: in this graph, 5 (b or f)
+
+e.clique
+smallest: any vertex by itself is a clique of size 1
+largest: this graph has a clique of size 5 (nodes b,c,d,e,f)
