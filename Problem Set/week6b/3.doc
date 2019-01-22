@@ -1,0 +1,12 @@
+// AVL trees (BST Trees + rotate rules)
+// A tree is unbalanced when: abs(height(left)-height(right)) > 1
+// This can be repaired by a single rotation:
+// 1. if left subtree too deep, rotate right
+// 2. if right subtree too deep, rotate left
+use 12 10 8 6 4 2 create AVL tree
+
+12   -->     12     -->     10    -->     10    -->     10     -->     6
+            /               /\            /\            /\            / \
+           10              8  12         8  12         6  12         4   10
+                                        /             / \           /    /\
+                                       6             4   8         2    8  12
