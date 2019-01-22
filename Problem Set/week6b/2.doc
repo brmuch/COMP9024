@@ -1,0 +1,24 @@
+// Splay trees
+Method:
+    1. every insert operation should make inserted node in the root place(through left rotate or right rotate).
+    2. simply moves item to root if found, or nearest node if not found
+
+a.
+    5   -->   3    -->    8    -->    7     -->     4
+               \         /           / \           / \
+                5       3           3   8         3   7
+                         \           \               / \
+                          5           5             5   8
+
+b.
+ Following steps are:
+    SearchSplay(t,7);
+    SearchSplay(t,8);
+    SearchSplay(t,6);
+    4     -->    7    -->    8    -->    5
+   / \          / \         /           / \
+  3   7        4   8       7           4   8
+     / \      / \         /           /   /
+    5   8    3   5       4           3   7
+                        / \
+                       3   5
