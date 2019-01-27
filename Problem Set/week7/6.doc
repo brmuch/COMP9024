@@ -1,0 +1,40 @@
+// Text: aaabaadaabaaa
+// Pattern: aabaaa
+
+// Use KMP Algorithm
+
+Failure function
+F[i]  0 1 2 3 4 5
+	  0 1 0 1 2 2
+	  
+Comparison process
+aaabaadaabaaa
+aabaaa
+123
+
+aaabaadaabaaa
+ aabaaa
+  45678
+ 
+aaabaadaabaaa
+    aabaaa
+      9	  
+
+aaabaadaabaaa
+     aabaaa	 
+	  10
+	  
+aaabaadaabaaa
+      aabaaa
+	  11
+	  
+aaabaadaabaaa
+       aabaaa
+       12
+	    13
+		 14
+		  15
+		   16
+		    17
+			
+so totally compare 17 times
