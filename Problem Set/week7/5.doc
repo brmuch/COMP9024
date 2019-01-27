@@ -1,0 +1,25 @@
+// Boyer-Moore Algorithms
+
+Text:
+ABCACBBDABCADD
+Pattern:
+ABCAD
+
+Comparison process:
+ABCACBBDABCADD
+ABCAD
+    ?
+
+ABCACBBDABCADD
+  ABCAD
+      ?
+
+ABCACBBDABCADD
+     ABCAD
+         ?
+
+ABCACBBDABCADD
+        ABCAD
+        |||||
+
+So, totally compare 8 times		
