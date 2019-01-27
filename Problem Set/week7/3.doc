@@ -1,0 +1,9 @@
+// Boyer-Moore algorithms
+
+pattern:
+xywapaswyy
+0123456789
+
+last-occurrence function(L)
+x y w a p s
+0 9 7 5 4 6
