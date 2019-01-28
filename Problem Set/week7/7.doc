@@ -1,0 +1,20 @@
+// Huffman code
+Text:
+ababbcdcbaabcacbbbs
+
+Frequency:
+a b c d s
+5 8 4 1 1
+
+so Huffman Tree is:
+        19
+       / \
+      11  b
+     / \
+    6   a
+   / \
+  2   c
+ / \
+d   s
+
+
