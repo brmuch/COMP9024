@@ -1,0 +1,7 @@
+// Algorithms for finding a cycle
+
+hasCycle(G) 
+Process:
+1. building a Adjacency Matrix, and initial all elements to 0
+2. use DFS to traveling all vertices, marked all connected vertices(++)
+3. if exist node in Adjacency Matrix >= 2, then the graph hasCycle
