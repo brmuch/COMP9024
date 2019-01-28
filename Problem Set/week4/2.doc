@@ -1,0 +1,18 @@
+a.
+Graph 1:
+have Hamiltonian paths, Eular paths
+don't have Hamiltonian circuits, Eular circuits
+
+Graph 2:
+have Hamiltonian paths/circuits, Eular paths/circuits
+
+Graph 3:
+don't have Hamiltonian paths/circuits, Eular paths/circuits
+
+Graph 4:
+have Hamiltonian paths/circuits
+don't have Eular paths/circuits
+
+b.
+don't have Eular circuits
+have Eular paths: 5-6-2-3-0-1-5-0-4-5-2
