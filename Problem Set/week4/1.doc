@@ -1,4 +1,63 @@
 a.
-The vertices are visited: 0-1-2-3-4-5-6-7
+The vertices are visited: 0-1-2-5-6-7-3-4
 
 Current    Stack (top at left)
+   -       0
+   0       1
+   1       2 3 4
+   2       5 3 4
+   5       6 7 3 4
+   6       7 3 4
+   7       3 4
+   3       4
+   4       -
+   
+b.
+The vertices are visited: 3-1-0-2-4-5-6-7
+
+Current    Stack (top at left)
+   -       3
+   3       1 2 4 5
+   1       0 2 4 5
+   0       2 4 5
+   2       4 5
+   4       5
+   5       6 7
+   6       7
+   7       -
+
+c.
+The vertices are visited: 0-1-2-3-4-5-6-7
+
+Current    Queue (out at left)
+   -       0
+   0       1
+   1       2 3 4
+   2       3 4 5
+   3       4 5
+   4       5
+   5       6 7
+   6       7
+   7       -
+   
+d.
+The vertices are visited: 3-1-2-4-5-0-6-7
+
+Current    Queue (out at left)
+   -       3
+   3       1 2 4 5
+   1       2 4 5 0
+   2       4 5 0
+   4       5 0
+   5       0 6 7
+   0       6 7
+   6       7
+   7       -
+  
+
+
+
+
+
+
+
