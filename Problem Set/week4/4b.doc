@@ -1,0 +1,6 @@
+1. edge d was removed
+cc[] array doesn't change
+
+2. edge b was removed
+cc[] array will change to
+cc[] = {0, 0, 1, 2, 2, 2, 1, 0, 1, 2}
