@@ -1,0 +1,50 @@
+// Insertion at root
+a.
+1 2 3 4 5 6
+The tree resulting from inserting these values "at leaf"
+1
+ \
+  2
+   \
+    3
+	 \
+	  4
+	   \
+	    5
+		 \
+		  6
+The tree resulting from inserting these values "at root"
+          6
+         /
+        5
+       /
+      4
+     /
+    3
+   /
+  2
+ /
+1
+The tree resulting from alternating between at-leaf-insertion and at-root-insertion
+      6
+	 /
+    4
+   / \
+  2   5
+ / \
+1   3	
+the resulting tree will be of height floor(n/2).
+
+b.
+Tree insertAtRoot(Tree t, Item it) { 
+   if (t == NULL) {
+      t = newNode(it);
+   } else if (it < data(t)) {
+      left(t) = insertAtRoot(left(t), it);
+      t = rotateRight(t);
+   } else if (it > data(t)) {
+      right(t) = insertAtRoot(right(t), it);
+      t = rotateLeft(t);
+   }
+   return t;
+}
