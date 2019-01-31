@@ -19,4 +19,5 @@ and 9 edges I consider.
 c.
 For a graph G=(V, E), the least number of edges considered by Kruskal's Algorithm is V-1;
 the most number of edges are all E.The worst case would be when we had to consider all E edges. 
-If we added a vertex 8 to the graph, and connected it to vertex 5 with edge cost 10 (or any cost larger than all the other edge costs in the graph).
+If we added a vertex 8 to the graph, and connected it to vertex 5 with edge cost 11 (or any cost larger than all the other edge costs in the graph).
+(if (5,8) is before (2,5) in the list and after including (5,8) all nodes are included. so must greater than 10)
