@@ -1,0 +1,28 @@
+a.
+One obvious class of trees with this property is "right-deep" trees. 
+Such trees have no left sub-trees on any node
+Empty trees and trees with just one node(root node) have all output orders the same.
+
+b.
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+
+void TreeTraversal(tree,style){
+	if (tree == NULL)
+		return;
+	else{
+		if (!strcmp(style,"NLR"))
+			printf("%d\n", tree->data);
+			
+		TreeTraversal(tree->left);
+		
+		if (!strcmp(style,"LNR"))
+			printf("%d\n", tree->data);
+			
+		TreeTraversal(tree->right);
+		
+		if (!strcmp(style,"LRN"))
+			printf("%d\n", tree->data);
+	}
+}
