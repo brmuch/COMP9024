@@ -29,7 +29,8 @@ void  freeGraph(Graph);
 int hasPath(Graph, int src, int dest);
 void findPath(Graph, int src, int dest);
 void findPathBFS(Graph, int src, int dest);
-void dfsCycleCheck(Graph, int v);
+int hasCycle(Graph g);
+int dfsCycleCheck(Graph g, int v);
 void components(Graph);
 // count number of nodes reachable from node "v" in a directed graph "g".
 int countReachableNodes(Graph, int v);

@@ -103,3 +103,57 @@ int dfsPathCheck(Graph g, int *mark, int src, int dest){
     }
     return 0;
 }
+
+
+//Q2:
+// find path from src to destination in given graph
+void findPath(Graph g, int src, int dest){
+    // initial route array
+    int *mark = malloc(g->nV * sizeof(int));
+    for (int i = 0; i < g->nV; i ++) {
+        if (i == dest)
+            mark[i] = dest;
+        else
+            mark[i] = -1;
+    }
+    dfsPathTravel(g, mark, src, dest);
+
+    
+    if (mark[dest] == dest && dest != src){             // don't find path from src to dest
+        printf("No paths from %d to %d\n", src, dest);
+    }
+    else{                                               // already find path in mark array
+        int index = mark[dest];
+        while (index != src) {
+            printf("%d-", index);
+            if (index == src)
+                break;
+            index = mark[index];
+        }
+        printf("\n");
+    }
+}
+
+void dfsPathTravel(Graph g, int * mark, int src, int dest){
+    // if mark[i] != -1 means already traveled, else no
+    if (src == dest)
+        return;
+    for (int i = 0; i < g->nV; i ++) {
+        if (mark[src] == -1 && g->edges[src][i] == 1){
+            mark[i] = src;
+            dfsPathTravel(g, mark, i, dest);
+        }
+    }
+        
+}
+
+//Q3:
+// determine whether given graph have cycle
+int hasCycle(Graph g) {
+    return dfsCycleCheck(g,0);
+} 
+
+// dfs support function for hasCycle
+int dfsCycleCheck(Graph g, int v) {
+
+}
