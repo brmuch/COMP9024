@@ -79,3 +79,27 @@ void freeGraph(Graph g) {
    free(g->edges);
    free(g);
 }
+
+//Q1:
+// determine whether has path from src to dest
+int hasPath(Graph g, int src, int dest){
+    int * mark = calloc(g->nV, sizeof(int));
+    return dfsPathCheck(g, mark, src, dest);
+}
+
+// dfs travel support function for hasPath function
+int dfsPathCheck(Graph g, int *mark, int src, int dest){
+    // mark src already traveled
+    mark[src] = 1;
+    if (src == dest){
+        return 1;
+    }
+    for (int i = 0; i < g->nV; i ++) {
+        if (mark[i] != 1 && g->edges[src][i] == 1 ){
+            if (dfsPathCheck(g, mark, i, dest)){
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
