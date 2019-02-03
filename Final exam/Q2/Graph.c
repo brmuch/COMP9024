@@ -32,6 +32,7 @@ bool validV(Graph g, Vertex v) {
    return (g != NULL && v >= 0 && v < g->nV);
 }
 
+// insert  an edge into graph
 void insertEdge(Graph g, Edge e) {
    assert(g != NULL && validV(g,e.v) && validV(g,e.w));
 
@@ -42,6 +43,7 @@ void insertEdge(Graph g, Edge e) {
    }
 }
 
+// remove edge from graph
 void removeEdge(Graph g, Edge e) {
    assert(g != NULL && validV(g,e.v) && validV(g,e.w));
 
@@ -52,12 +54,14 @@ void removeEdge(Graph g, Edge e) {
    }
 }
 
+// determine whether two Vertices adjacent
 bool adjacent(Graph g, Vertex v, Vertex w) {
    assert(g != NULL && validV(g,v) && validV(g,w));
 
    return (g->edges[v][w] != 0);
 }
 
+// display information about Graph
 void showGraph(Graph g) {
     assert(g != NULL);
     int i, j;
@@ -70,6 +74,7 @@ void showGraph(Graph g) {
 	      printf("Edge %d - %d\n", i, j);
 }
 
+// free Graph
 void freeGraph(Graph g) {
    assert(g != NULL);
 
@@ -82,11 +87,6 @@ void freeGraph(Graph g) {
 
 //Q1:
 // determine whether has path from src to dest
-int hasPath(Graph g, int src, int dest){
-    int * mark = calloc(g->nV, sizeof(int));
-    return dfsPathCheck(g, mark, src, dest);
-}
-
 // dfs travel support function for hasPath function
 int dfsPathCheck(Graph g, int *mark, int src, int dest){
     // mark src already traveled
@@ -104,9 +104,26 @@ int dfsPathCheck(Graph g, int *mark, int src, int dest){
     return 0;
 }
 
+int hasPath(Graph g, int src, int dest){
+    int * mark = calloc(g->nV, sizeof(int));
+    return dfsPathCheck(g, mark, src, dest);
+}
 
 //Q2:
 // find path from src to destination in given graph
+void dfsPathTravel(Graph g, int * mark, int src, int dest){
+    // if mark[i] != -1 means already traveled, else no
+    if (src == dest)
+        return;
+    for (int i = 0; i < g->nV; i ++) {
+        if (mark[src] == -1 && g->edges[src][i] == 1){
+            mark[i] = src;
+            dfsPathTravel(g, mark, i, dest);
+        }
+    }
+        
+}
+
 void findPath(Graph g, int src, int dest){
     // initial route array
     int *mark = malloc(g->nV * sizeof(int));
@@ -134,26 +151,31 @@ void findPath(Graph g, int src, int dest){
     }
 }
 
-void dfsPathTravel(Graph g, int * mark, int src, int dest){
-    // if mark[i] != -1 means already traveled, else no
-    if (src == dest)
-        return;
-    for (int i = 0; i < g->nV; i ++) {
-        if (mark[src] == -1 && g->edges[src][i] == 1){
-            mark[i] = src;
-            dfsPathTravel(g, mark, i, dest);
-        }
-    }
-        
-}
-
 //Q3:
 // determine whether given graph have cycle
-int hasCycle(Graph g) {
-    return dfsCycleCheck(g,0);
-} 
+// dfs travel, return 0 when no Cycle, else 1
+// support recursive function for dfsCycleCheck
+int recur_dfsCycleCheck(Graph g, int v, int * mark, int from) {
+    mark[v] = 1;
+    
+    for (int i = 0; i < g->nV; i ++) {
+        if (g->edges[v][i] && i != from){
+            if (mark[i] != 1){
+                if (recur_dfsCycleCheck(g, i, mark, v))
+                    return 1;
+            }
+            else{
+                return 1;
+            }
+        }
+    }
 
-// dfs support function for hasCycle
+    return 0;
+}
+
 int dfsCycleCheck(Graph g, int v) {
+    // mark array, mark[i] = 1 when already traveled, so initial all elements to 0
+    int * mark = calloc(g->nV, sizeof(int));
 
+    return recur_dfsCycleCheck(g, v, mark, 0);
 }

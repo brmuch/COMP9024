@@ -1,5 +1,7 @@
 // Graph ADT interface ... COMP9024 17s2
 // Create by Ashesh Mahadadia, Modify by Ran Bai
+#ifndef GRAPH_H
+#define GRAPH_H
 #include <stdbool.h>
 
 typedef struct GraphRep *Graph;
@@ -29,8 +31,9 @@ void  freeGraph(Graph);
 int hasPath(Graph, int src, int dest);
 void findPath(Graph, int src, int dest);
 void findPathBFS(Graph, int src, int dest);
-int hasCycle(Graph g);
 int dfsCycleCheck(Graph g, int v);
 void components(Graph);
 // count number of nodes reachable from node "v" in a directed graph "g".
 int countReachableNodes(Graph, int v);
+
+#endif
