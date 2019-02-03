@@ -7,7 +7,7 @@ int main(int argc, char **argv){
 
     // test samples
     // initial graph
-    Graph g = newGraph(5);
+    Graph g = newGraph(6);
     Edge e;
 
     e.v = 0;
@@ -26,12 +26,16 @@ int main(int argc, char **argv){
     e.w = 4;
     insertEdge(g, e);   //  0 - 4
 
-    e.v = 2;
-    e.w = 4;
-    insertEdge(g, e);   //  2 - 4
-    showGraph(g);
+    //e.v = 2;
+    //e.w = 4;
+    //insertEdge(g, e);   //  2 - 4
+    //showGraph(g);
 
-    printf("Graph has Cycle: %d", dfsCycleCheck(g, 0));
-    //printf("")
+    printf("Graph has Cycle: %d\n", dfsCycleCheck(g, 0));
+    printf("Graph has path: %d\n", hasPath(g, 0, 5));
+    int src = 4;
+    int dest = 3;
+    printf("The path from %d to %d is: ", src, dest);
+    findPath(g, src, dest);
     return 0;
 }

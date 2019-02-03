@@ -105,6 +105,7 @@ int dfsPathCheck(Graph g, int *mark, int src, int dest){
 }
 
 int hasPath(Graph g, int src, int dest){
+    // mark array
     int * mark = calloc(g->nV, sizeof(int));
     return dfsPathCheck(g, mark, src, dest);
 }
@@ -115,8 +116,9 @@ void dfsPathTravel(Graph g, int * mark, int src, int dest){
     // if mark[i] != -1 means already traveled, else no
     if (src == dest)
         return;
+
     for (int i = 0; i < g->nV; i ++) {
-        if (mark[src] == -1 && g->edges[src][i] == 1){
+        if (mark[i] == -1 && g->edges[src][i] == 1){
             mark[i] = src;
             dfsPathTravel(g, mark, i, dest);
         }
@@ -127,12 +129,10 @@ void dfsPathTravel(Graph g, int * mark, int src, int dest){
 void findPath(Graph g, int src, int dest){
     // initial route array
     int *mark = malloc(g->nV * sizeof(int));
-    for (int i = 0; i < g->nV; i ++) {
-        if (i == dest)
-            mark[i] = dest;
-        else
-            mark[i] = -1;
-    }
+    for (int i = 0; i < g->nV; i ++)
+        mark[i] = -1;
+    mark[src] = src;
+
     dfsPathTravel(g, mark, src, dest);
 
     
@@ -141,12 +141,12 @@ void findPath(Graph g, int src, int dest){
     }
     else{                                               // already find path in mark array
         int index = mark[dest];
+        printf("%d", dest);
         while (index != src) {
-            printf("%d-", index);
-            if (index == src)
-                break;
+            printf("<-%d", index);
             index = mark[index];
         }
+        printf("<-%d", src);
         printf("\n");
     }
 }
