@@ -1,2 +1,17 @@
 // ReBalancing Tree
 
+rebalance(t);
+step 1: skip if tree node < 3, else do step 2
+step 2: partition(t, floor(n / 2)); // put node with median key at root
+step 3: rebalance(t->left)
+step 4: rebalance(t->right)
+
+2                 2                    8                  8
+ \                 \                  / \                / \
+  4                 8                2   10             4   10
+   \               / \                \   \            / \   \
+    8             4   10               4   12         2   6   12
+   / \             \   \                \
+  6	  10            6   12               6
+	   \
+	    12
