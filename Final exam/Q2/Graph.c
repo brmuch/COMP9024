@@ -136,13 +136,14 @@ void findPath(Graph g, int src, int dest){
     dfsPathTravel(g, mark, src, dest);
 
     
-    if (mark[dest] == dest && dest != src){             // don't find path from src to dest
+    if (mark[dest] == -1){                             // don't find path from src to dest
         printf("No paths from %d to %d\n", src, dest);
     }
     else{                                               // already find path in mark array
         int index = mark[dest];
-        printf("%d", dest);
-        while (index != src) {
+
+        printf("%d", dest);             // print route from destination to source
+        while (index != src) {       
             printf("<-%d", index);
             index = mark[index];
         }
