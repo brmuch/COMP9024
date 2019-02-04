@@ -48,3 +48,23 @@ Tree insertAtRoot(Tree t, Item it) {
    }
    return t;
 }
+
+Tree rotateLeft(Tree t){
+	if (t == NULL || t->right == NULL)
+		return t;
+	Tree right = t->right;
+	t->right = right->left;
+	right->left = t;
+	
+	return right;
+}
+
+Tree rotateRight(Tree t){
+	if (t == NULL || t->left == NULL)
+		return t;
+	Tree left = t->left;
+	t->left = left->right;
+	left->right = t;
+	
+	return left;
+}
