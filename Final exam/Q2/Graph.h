@@ -1,10 +1,8 @@
 // Graph ADT interface ... COMP9024 17s2
-// Create by Ashesh Mahadadia, Modify by Ran Bai
-#ifndef GRAPH_H
-#define GRAPH_H
 #include <stdbool.h>
 
 typedef struct GraphRep *Graph;
+
 typedef struct GraphRep {
    int  **edges;   // adjacency matrix
    int    nV;      // #vertices
@@ -27,13 +25,10 @@ bool  adjacent(Graph, Vertex, Vertex);
 void  showGraph(Graph);
 void  freeGraph(Graph);
 
-// support function for final exam
-int hasPath(Graph, int src, int dest);
-void findPath(Graph, int src, int dest);
-void findPathBFS(Graph, int src, int dest);
-int dfsCycleCheck(Graph g, int v);
-void components(Graph);
-// count number of nodes reachable from node "v" in a directed graph "g".
-int countReachableNodes(Graph, int v);
-
-#endif
+// support function for Q2 in 9024 exam sample
+bool hasPath(Graph g,int src,int dest);
+bool findPath(Graph g,int src,int dest);
+//bool findPathBFS(Graph g,int src,int dest);
+bool dfsCycleCheck(Graph g,int v);
+//int components(Graph g);
+int countReachableNodes(Graph g, int v);

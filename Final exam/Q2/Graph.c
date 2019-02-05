@@ -1,10 +1,10 @@
 // Graph ADT
 // Adjacency Matrix Representation ... COMP9024 17s2
-// Create by Ashesh Mahadadia, Modify by Ran Bai
+#include "Graph.h"
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "Graph.h"
+#include <stdbool.h>
 
 Graph newGraph(int V) {
    assert(V >= 0);
@@ -32,7 +32,6 @@ bool validV(Graph g, Vertex v) {
    return (g != NULL && v >= 0 && v < g->nV);
 }
 
-// insert  an edge into graph
 void insertEdge(Graph g, Edge e) {
    assert(g != NULL && validV(g,e.v) && validV(g,e.w));
 
@@ -43,7 +42,6 @@ void insertEdge(Graph g, Edge e) {
    }
 }
 
-// remove edge from graph
 void removeEdge(Graph g, Edge e) {
    assert(g != NULL && validV(g,e.v) && validV(g,e.w));
 
@@ -54,14 +52,12 @@ void removeEdge(Graph g, Edge e) {
    }
 }
 
-// determine whether two Vertices adjacent
 bool adjacent(Graph g, Vertex v, Vertex w) {
    assert(g != NULL && validV(g,v) && validV(g,w));
 
    return (g->edges[v][w] != 0);
 }
 
-// display information about Graph
 void showGraph(Graph g) {
     assert(g != NULL);
     int i, j;
@@ -74,7 +70,6 @@ void showGraph(Graph g) {
 	      printf("Edge %d - %d\n", i, j);
 }
 
-// free Graph
 void freeGraph(Graph g) {
    assert(g != NULL);
 
@@ -85,98 +80,111 @@ void freeGraph(Graph g) {
    free(g);
 }
 
-//Q1:
-// determine whether has path from src to dest
-// dfs travel support function for hasPath function
-int dfsPathCheck(Graph g, int *mark, int src, int dest){
-    // mark src already traveled
-    mark[src] = 1;
-    if (src == dest){
-        return 1;
-    }
-    for (int i = 0; i < g->nV; i ++) {
-        if (mark[i] != 1 && g->edges[src][i] == 1 ){
-            if (dfsPathCheck(g, mark, i, dest)){
-                return 1;
-            }
-        }
-    }
-    return 0;
+// Q1
+extern bool dfs_hasPath(Graph g, int src, int dest, int *visited);
+bool hasPath(Graph g,int src,int dest) {
+	int * visited = calloc(g->nV, sizeof(int));
+	return dfs_hasPath(g, src, dest, visited);
 }
 
-int hasPath(Graph g, int src, int dest){
-    // mark array
-    int * mark = calloc(g->nV, sizeof(int));
-    return dfsPathCheck(g, mark, src, dest);
+// dfs support function for hasPath
+bool dfs_hasPath(Graph g, int src, int dest, int *visited) {
+	visited[src] = 1;
+	
+	for (int i = 0; i < g->nV; i ++) {
+		if (g->edges[src][i] == 1 && visited[i] == 0) {
+			if (i == dest)
+				return true;
+			else if (dfs_hasPath(g, i, dest, visited)){
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
-//Q2:
-// find path from src to destination in given graph
-void dfsPathTravel(Graph g, int * mark, int src, int dest){
-    // if mark[i] != -1 means already traveled, else no
-    if (src == dest)
-        return;
-
-    for (int i = 0; i < g->nV; i ++) {
-        if (mark[i] == -1 && g->edges[src][i] == 1){
-            mark[i] = src;
-            dfsPathTravel(g, mark, i, dest);
-        }
-    }
-        
+// Q2
+extern bool dfs_findPath(Graph g, int src, int dest, int *visited);
+bool findPath(Graph g,int src,int dest) {
+	int *visited = malloc(g->nV * sizeof(int));
+	// initial visited array
+	for (int i = 0; i < g->nV; i ++) {
+		visited[i] = -1;
+	}
+	visited[src] = src;
+	
+	if (dfs_findPath(g, src, dest, visited)) {
+		int index = dest;
+		while (index != src) {
+			printf("%d-", index);
+			index = visited[index];
+		}
+		printf("%d\n", index);
+		return true;
+	}
+	else {
+		printf("can not find a path from %d to %d.\n", src, dest);
+		return false;
+	}
 }
 
-void findPath(Graph g, int src, int dest){
-    // initial route array
-    int *mark = malloc(g->nV * sizeof(int));
-    for (int i = 0; i < g->nV; i ++)
-        mark[i] = -1;
-    mark[src] = src;
-
-    dfsPathTravel(g, mark, src, dest);
-
-    
-    if (mark[dest] == -1){                             // don't find path from src to dest
-        printf("No paths from %d to %d\n", src, dest);
-    }
-    else{                                               // already find path in mark array
-        int index = mark[dest];
-
-        printf("%d", dest);             // print route from destination to source
-        while (index != src) {       
-            printf("<-%d", index);
-            index = mark[index];
-        }
-        printf("<-%d", src);
-        printf("\n");
-    }
+// support funciton for findPath
+bool dfs_findPath(Graph g, int src, int dest, int *visited) {
+	for (int i = 0; i < g->nV; i ++) {
+		if (g->edges[src][i] == 1 && visited[i] == -1) {
+			visited[i] = src;
+			if (i == dest)
+				return true;
+			else if (dfs_findPath(g, i, dest, visited))
+				return true;
+		}
+	}
+	return false;
 }
 
-//Q3:
-// determine whether given graph have cycle
-// dfs travel, return 0 when no Cycle, else 1
-// support recursive function for dfsCycleCheck
-int recur_dfsCycleCheck(Graph g, int v, int * mark, int from) {
-    mark[v] = 1;
-    
-    for (int i = 0; i < g->nV; i ++) {
-        if (g->edges[v][i] && i != from){
-            if (mark[i] != 1){
-                if (recur_dfsCycleCheck(g, i, mark, v))
-                    return 1;
-            }
-            else{
-                return 1;
-            }
-        }
-    }
-
-    return 0;
+//Q3 warning: exit the node from
+extern bool dfs_CycleCheck(Graph g, int v, int *visited, int from);
+bool dfsCycleCheck(Graph g,int v) {
+	int *visited = calloc(g->nV, sizeof(int));
+	return dfs_CycleCheck(g, v, visited, -1);
 }
 
-int dfsCycleCheck(Graph g, int v) {
-    // mark array, mark[i] = 1 when already traveled, so initial all elements to 0
-    int * mark = calloc(g->nV, sizeof(int));
+bool dfs_CycleCheck(Graph g, int v, int *visited, int from) {
+	visited[v] = 1;
+	
+	for (int i = 0; i < g->nV; i ++) {
+		if (g->edges[v][i] == 1 && i != from){
+			if (visited[i] == 1)
+				return true;
+			else if (dfs_CycleCheck(g, i, visited, v)){
+				return true;
+			}
+		}
+	}
+	return false;
+}
 
-    return recur_dfsCycleCheck(g, v, mark, 0);
+//Q4:
+extern void dfs_countReachableNodes(Graph g, int v, int *visited);
+int countReachableNodes(Graph g, int v) {
+	int *visited = calloc(g->nV, sizeof(int));
+	int count = 0;
+	dfs_countReachableNodes(g, v, visited);
+	for (int i = 0; i < g->nV; i ++) {
+		for (int j = i + 1; j < g->nV; j ++)
+		if (g->edges[i][j])
+			count ++;
+	}
+	free(visited);
+	return count;
+}
+
+void dfs_countReachableNodes(Graph g, int v, int *visited) {
+	visited[v] = 1;
+	
+	for (int i = 0; i < g->nV; i ++) {
+		if (g->edges[v][i] == 1 && visited[i] == 0) {
+			dfs_countReachableNodes(g, i, visited);
+		}
+	}
 }
