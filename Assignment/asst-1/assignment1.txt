@@ -1,0 +1,6 @@
+COMP9024 Assigment1 
+
+Aim of Iterator:
+1.traverse the list in either direction
+2.modify the list during iteration
+3.obtain the iterator's current position in the list
