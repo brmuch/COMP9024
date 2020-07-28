@@ -12,7 +12,6 @@ class Solution:
         
     
     def TopToBottomDP(self, m, A, dicts):
-        A = [i for i in A if i <= m]
         if len(A) == 0 or m < min(A):
             return 0
         
