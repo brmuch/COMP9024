@@ -6,11 +6,17 @@ class Solution:
     """
     def backPack(self, m, A):
         # write your code here
+        if sum(A) <= m:
+            return sum(A)
+        
         possibleVLS = {0}
-    
         for item in A:
             temp = list(possibleVLS)
-            possibleVLS = possibleVLS.union(set([i + item for i in temp if i + item <= m]))
-    
-        return max([i for i in list(possibleVLS) if i <= m])
+            temp.extend([i + item for i in temp if i + item <= m])
+            
+            if m in possibleVLS:
+                return m
+            possibleVLS = set(temp)
+            
+        return max(possibleVLS)
                 
