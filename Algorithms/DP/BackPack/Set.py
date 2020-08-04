@@ -10,6 +10,7 @@ class Solution:
     
         for item in A:
             temp = list(possibleVLS)
-            possibleVLS = possibleVLS.union(set([i + item for i in temp]))
+            possibleVLS = possibleVLS.union(set([i + item for i in temp if i + item <= m]))
     
         return max([i for i in list(possibleVLS) if i <= m])
+                
